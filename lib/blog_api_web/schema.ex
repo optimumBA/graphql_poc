@@ -17,5 +17,11 @@ defmodule BlogApiWeb.Schema do
     field :all_posts, list_of(:post) do
       resolve(&PostResolver.all_posts/3)
     end
+
+    @desc "Get a single post"
+    field :get_post, :post do
+      arg(:id, :id)
+      resolve(&PostResolver.get_post/3)
+    end
   end
 end
