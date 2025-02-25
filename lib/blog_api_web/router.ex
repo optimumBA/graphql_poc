@@ -9,6 +9,20 @@ defmodule BlogApiWeb.Router do
     pipe_through :api
   end
 
+  scope "/graphql" do
+    pipe_through :api
+    forward "/", Absinthe.Plug, schema: BlogApiWeb.Schema
+  end
+
+  scope "/graphiql" do
+    pipe_through :api
+    forward "/", Absinthe.Plug.GraphiQL,
+      schema: BlogApiWeb.Schema,
+      # interfaces can be :playground or :simple or :advanced or :playground
+      interface: :playground,
+      context: %{pubsub: BlogApiWeb.PubSub}
+  end
+
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:blog_api, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
