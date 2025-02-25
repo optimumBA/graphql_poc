@@ -23,7 +23,7 @@ defmodule BlogApi.Blog.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :body, :published_at, :views])
-    |> validate_required([:title, :body, :published_at, :views])
+    |> cast(attrs, [:title, :body])
+    |> validate_required([:title, :body])
   end
 end

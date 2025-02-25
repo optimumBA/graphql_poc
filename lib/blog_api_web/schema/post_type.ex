@@ -1,7 +1,7 @@
 defmodule BlogApiWeb.Schema.Types.PostType do
   use Absinthe.Schema.Notation
 
-  object :post do
+  object :post_type do
     field :id, :id
     field :title, :string
     field :body, :string
@@ -11,8 +11,8 @@ defmodule BlogApiWeb.Schema.Types.PostType do
     field :updated_at, :naive_datetime
   end
 
-  input_object :post_input do
-    field :title, :string
-    field :body, :string
+  input_object :post_input_type do
+    field :title, non_null(:string)
+    field :body, non_null(:string)
   end
 end
