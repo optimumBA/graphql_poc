@@ -4,13 +4,7 @@ defmodule BlogApiWeb.Schema do
   alias BlogApiWeb.PostResolver
 
   import_types Absinthe.Type.Custom
-  object :post do
-    field :id, :id
-    field :title, :string
-    field :body, :string
-    field :published_at, :naive_datetime
-    field :views, :integer
-  end
+  import_types BlogApiWeb.Schema.Types
 
   query do
     @desc "Get all posts"
