@@ -3,14 +3,14 @@ defmodule BlogApi.Blog.Post do
   import Ecto.Changeset
 
   @type t :: %__MODULE__{
-    id: integer,
-    title: String.t(),
-    body: String.t(),
-    published_at: NaiveDateTime.t(),
-    views: integer,
-    inserted_at: NaiveDateTime.t(),
-    updated_at: NaiveDateTime.t()
-  }
+          id: integer,
+          title: String.t(),
+          body: String.t(),
+          published_at: NaiveDateTime.t(),
+          views: integer,
+          inserted_at: NaiveDateTime.t(),
+          updated_at: NaiveDateTime.t()
+        }
   schema "posts" do
     field :title, :string
     field :body, :string

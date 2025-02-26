@@ -12,9 +12,11 @@
 
 for i <- 1..50 do
   :timer.sleep(100)
+
   BlogApi.Repo.insert!(%BlogApi.Blog.Post{
     title: "My First Post #{i}",
     body: "This is my first post #{i}",
-    published_at: NaiveDateTime.truncate(NaiveDateTime.add(NaiveDateTime.utc_now(), -i * 1000), :second)
+    published_at:
+      NaiveDateTime.truncate(NaiveDateTime.add(NaiveDateTime.utc_now(), -i * 1000), :second)
   })
 end
