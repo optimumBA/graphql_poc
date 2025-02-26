@@ -13,4 +13,9 @@ defmodule BlogApiWeb.Schema.Types.UserType do
     field :password, non_null(:string)
     field :password_confirmation, non_null(:string)
   end
+
+  input_object :user_login_input_type do
+    field :email, non_null(:string)
+    field :password, non_null(:string)
+  end
 end

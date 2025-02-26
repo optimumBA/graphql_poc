@@ -3,5 +3,5 @@ defmodule BlogApiWeb.Schema.Types do
 
   alias BlogApiWeb.Schema.Types
 
-  import_types Types.{PostType, UserType}
+  import_types Types.{PostType, UserType, SessionType}
 end

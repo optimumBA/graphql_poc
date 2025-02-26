@@ -58,10 +58,21 @@ defmodule BlogApi.Accounts do
   """
   def authenticate_user(email, password) do
     user = Repo.get_by(User, email: String.downcase(email))
+
     if user && Bcrypt.verify_pass(password, user.password_hash) do
       {:ok, user}
     else
       {:error, :invalid_credentials}
+    end
+  end
+
+  @doc """
+  Login a user and return a JWT token.
+  """
+  def login_user(email, password) do
+    case authenticate_user(email, password) do
+      {:ok, user} -> {:ok, user}
+      {:error, error} -> {:error, error}
     end
   end
 
