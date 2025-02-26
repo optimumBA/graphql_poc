@@ -18,6 +18,11 @@ defmodule BlogApiWeb.Schema do
       resolve(&Resolvers.PostResolver.get_post/3)
     end
 
+    @desc "Get all users"
+    field :all_users, list_of(:user_type) do
+      resolve(&Resolvers.UserResolver.all_users/3)
+    end
+
     @desc "Get a single user"
     field :get_user, :user_type do
       arg(:id, :id)
