@@ -3,6 +3,7 @@ defmodule BlogApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug BlogApiWeb.Plugs.Context
   end
 
   scope "/api", BlogApiWeb do

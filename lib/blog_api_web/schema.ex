@@ -4,6 +4,7 @@ defmodule BlogApiWeb.Schema do
   import_types Absinthe.Type.Custom
   import_types BlogApiWeb.Schema.Types
 
+  alias BlogApiWeb.Schema.Middleware
   alias BlogApiWeb.Resolvers
 
   query do
@@ -20,11 +21,13 @@ defmodule BlogApiWeb.Schema do
 
     @desc "Get all users"
     field :all_users, list_of(:user_type) do
+      middleware(Middleware.Authorize)
       resolve(&Resolvers.UserResolver.all_users/3)
     end
 
     @desc "Get a single user"
     field :get_user, :user_type do
+      middleware(Middleware.Authorize)
       arg(:id, :id)
       resolve(&Resolvers.UserResolver.get_user/3)
     end
