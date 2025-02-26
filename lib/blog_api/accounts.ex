@@ -37,6 +37,34 @@ defmodule BlogApi.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user(id) do
+    Repo.get(User, id)
+  end
+
+  @doc """
+  Gets a user by email.
+
+  Returns `nil` if the user does not exist.
+  """
+  def get_user_by_email(email) do
+    Repo.get_by(User, email: String.downcase(email))
+  end
+
+  @doc """
+  Authenticates a user by email and password.
+
+  Returns `{:ok, user}` if the user exists and the password is correct.
+  Returns `{:error, :invalid_credentials}` if the user does not exist or the password is incorrect.
+  """
+  def authenticate_user(email, password) do
+    user = Repo.get_by(User, email: String.downcase(email))
+    if user && Bcrypt.verify_pass(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, :invalid_credentials}
+    end
+  end
+
   @doc """
   Creates a user.
 
