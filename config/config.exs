@@ -39,6 +39,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Guardian config
+config :blog_api, BlogApi.Guardian,
+  issuer: "blog_api",
+  secret_key: "zI4auIub3pmG2803I8BuMeghhARrXR+NbJqGUAouys4JhXRe1btZQei1qZaJrPdE"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

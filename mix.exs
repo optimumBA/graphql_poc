@@ -46,7 +46,9 @@ defmodule BlogApi.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:absinthe, "~> 1.7"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:bcrypt_elixir, "~> 3.2"},
+      {:guardian, "~> 2.3"}
     ]
   end
 

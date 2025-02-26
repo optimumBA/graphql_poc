@@ -21,7 +21,12 @@ defmodule BlogApi.BlogTest do
     end
 
     test "create_post/1 with valid data creates a post" do
-      valid_attrs = %{title: "some title", body: "some body", published_at: ~N[2025-02-24 13:08:00], views: 42}
+      valid_attrs = %{
+        title: "some title",
+        body: "some body",
+        published_at: ~N[2025-02-24 13:08:00],
+        views: 42
+      }
 
       assert {:ok, %Post{} = post} = Blog.create_post(valid_attrs)
       assert post.title == "some title"
@@ -36,7 +41,13 @@ defmodule BlogApi.BlogTest do
 
     test "update_post/2 with valid data updates the post" do
       post = post_fixture()
-      update_attrs = %{title: "some updated title", body: "some updated body", published_at: ~N[2025-02-25 13:08:00], views: 43}
+
+      update_attrs = %{
+        title: "some updated title",
+        body: "some updated body",
+        published_at: ~N[2025-02-25 13:08:00],
+        views: 43
+      }
 
       assert {:ok, %Post{} = post} = Blog.update_post(post, update_attrs)
       assert post.title == "some updated title"

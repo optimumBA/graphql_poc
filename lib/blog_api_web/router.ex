@@ -3,6 +3,7 @@ defmodule BlogApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug BlogApiWeb.Plugs.Context
   end
 
   scope "/api", BlogApiWeb do
@@ -16,10 +17,11 @@ defmodule BlogApiWeb.Router do
 
   scope "/graphiql" do
     pipe_through :api
+
     forward "/", Absinthe.Plug.GraphiQL,
       schema: BlogApiWeb.Schema,
       # interfaces can be :playground or :simple or :advanced or :playground
-      interface: :playground,
+      interface: :advanced,
       context: %{pubsub: BlogApiWeb.PubSub}
   end
 
