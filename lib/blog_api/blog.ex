@@ -60,6 +60,22 @@ defmodule BlogApi.Blog do
   end
 
   @doc """
+  Returns a user by post id.
+
+  ## Examples
+
+      iex> get_posts_by_user_id(1)
+      [%Post{}, ...]
+
+      iex> get_posts_by_user_id(2)
+      []
+
+  """
+  def get_posts_by_user_id(user_id) do
+    Repo.all(from p in Post, where: p.user_id == ^user_id)
+  end
+
+  @doc """
   Updates a post.
 
   ## Examples

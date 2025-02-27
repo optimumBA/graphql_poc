@@ -19,6 +19,13 @@ defmodule BlogApiWeb.Schema do
       resolve(&Resolvers.PostResolver.get_post/3)
     end
 
+    @desc "Get all posts by user"
+    field :get_posts_by_user_id, list_of(:post_type) do
+      middleware(Middleware.Authorize)
+      arg(:id, :id)
+      resolve(&Resolvers.PostResolver.get_posts_by_user_id/3)
+    end
+
     @desc "Get all users"
     field :all_users, list_of(:user_type) do
       middleware(Middleware.Authorize)
@@ -42,6 +49,7 @@ defmodule BlogApiWeb.Schema do
   mutation do
     @desc "Create a new post"
     field :create_post, type: :post_type do
+      middleware(Middleware.Authorize)
       arg(:input, non_null(:post_input_type))
       resolve(&Resolvers.PostResolver.create_post/3)
     end
