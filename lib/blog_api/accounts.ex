@@ -22,6 +22,27 @@ defmodule BlogApi.Accounts do
   end
 
   @doc """
+  Returns a list of users with their posts.
+
+  ## Examples
+
+      iex> list_users_with_posts()
+      [%User{posts: [%Post{}, ...]}, ...]
+
+      iex> list_users_with_posts()
+      [%User{posts: [%Post{}, ...]}, ...]
+
+      iex> list_users_with_posts()
+      [%User{posts: [%Post{}, ...]}, ...]
+
+  """
+  def list_users_with_posts do
+    User
+    |> Repo.all()
+    |> Repo.preload(:posts)
+  end
+
+  @doc """
   Gets a single user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.

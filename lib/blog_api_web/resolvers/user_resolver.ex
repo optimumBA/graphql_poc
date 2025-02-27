@@ -21,4 +21,9 @@ defmodule BlogApiWeb.Resolvers.UserResolver do
       user -> {:ok, user}
     end
   end
+
+  @spec all_users_with_their_posts(any, any, any) :: {:ok, list(map())}
+  def all_users_with_their_posts(_root, _args, _info) do
+    {:ok, Accounts.list_users_with_posts()}
+  end
 end
