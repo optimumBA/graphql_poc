@@ -1,11 +1,17 @@
 defmodule BlogApiWeb.Schema.Types.UserType do
   use Absinthe.Schema.Notation
 
+  alias BlogApiWeb.Resolvers
+
   object :user_type do
     field :id, :id
     field :email, :string
     field :inserted_at, :naive_datetime
     field :updated_at, :naive_datetime
+
+    field :posts, list_of(:post_type) do
+      resolve &Resolvers.UserResolver.get_user_posts/3
+    end
   end
 
   input_object :user_input_type do
