@@ -8,7 +8,7 @@ defmodule BlogApi.BlogTest do
 
     import BlogApi.BlogFixtures
 
-    @invalid_attrs %{title: nil, body: nil, published_at: nil, views: nil}
+    @invalid_attrs %{title: nil, body: nil, user_id: nil}
 
     test "list_posts/0 returns all posts" do
       post = post_fixture()
@@ -21,18 +21,17 @@ defmodule BlogApi.BlogTest do
     end
 
     test "create_post/1 with valid data creates a post" do
+      user = BlogApi.AccountsFixtures.user_fixture()
+
       valid_attrs = %{
         title: "some title",
         body: "some body",
-        published_at: ~N[2025-02-24 13:08:00],
-        views: 42
+        user_id: user.id
       }
 
       assert {:ok, %Post{} = post} = Blog.create_post(valid_attrs)
       assert post.title == "some title"
       assert post.body == "some body"
-      assert post.published_at == ~N[2025-02-24 13:08:00]
-      assert post.views == 42
     end
 
     test "create_post/1 with invalid data returns error changeset" do
@@ -44,16 +43,12 @@ defmodule BlogApi.BlogTest do
 
       update_attrs = %{
         title: "some updated title",
-        body: "some updated body",
-        published_at: ~N[2025-02-25 13:08:00],
-        views: 43
+        body: "some updated body"
       }
 
       assert {:ok, %Post{} = post} = Blog.update_post(post, update_attrs)
       assert post.title == "some updated title"
       assert post.body == "some updated body"
-      assert post.published_at == ~N[2025-02-25 13:08:00]
-      assert post.views == 43
     end
 
     test "update_post/2 with invalid data returns error changeset" do

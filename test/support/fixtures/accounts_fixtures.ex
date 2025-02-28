@@ -11,8 +11,9 @@ defmodule BlogApi.AccountsFixtures do
     {:ok, user} =
       attrs
       |> Enum.into(%{
-        email: "some email",
-        password_hash: "some password_hash"
+        email: "test#{System.unique_integer()}@example.com",
+        password: "password123",
+        password_confirmation: "password123"
       })
       |> BlogApi.Accounts.create_user()
 

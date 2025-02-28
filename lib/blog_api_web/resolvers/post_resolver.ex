@@ -17,6 +17,7 @@ defmodule BlogApiWeb.Resolvers.PostResolver do
   @spec create_post(any, any, any) :: {:ok, Blog.Post.t()} | {:error, String.t()}
   def create_post(_, %{input: input}, %{context: %{current_user: user}}) do
     input = Map.put(input, :user_id, user.id)
+
     case Blog.create_post(input) do
       {:ok, post} -> {:ok, post}
       {:error, changeset} -> {:error, changeset}
@@ -24,8 +25,8 @@ defmodule BlogApiWeb.Resolvers.PostResolver do
   end
 
   def create_post(_, _, _) do
-  {:error, "Authentication required to create a post"}
-end
+    {:error, "Authentication required to create a post"}
+  end
 
   @spec get_posts_by_user_id(any, any, any) :: {:ok, list(Blog.Post.t())} | {:error, String.t()}
   def get_posts_by_user_id(_, %{id: id}, _) do
