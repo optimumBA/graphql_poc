@@ -4,13 +4,13 @@ defmodule BlogApiWeb.Schema.Types.UserType do
   alias BlogApiWeb.Resolvers
 
   object :user_type do
-    field :id, :id
-    field :email, :string
-    field :inserted_at, :naive_datetime
-    field :updated_at, :naive_datetime
+    field :id, non_null(:id)
+    field :email, non_null(:string)
+    field :inserted_at, non_null(:naive_datetime)
+    field :updated_at, non_null(:naive_datetime)
 
     field :posts, list_of(:post_type) do
-      resolve &Resolvers.UserResolver.get_user_posts/3
+      resolve &Resolvers.PostResolver.all_posts/3
     end
   end
 

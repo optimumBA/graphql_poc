@@ -15,8 +15,15 @@ defmodule BlogApiWeb.Resolvers.UserResolver do
   end
 
   @spec get_user(any, any, any) :: {:ok, map()} | {:error, String.t()}
-  def get_user(_, %{id: id}, _) do
-    case Accounts.get_user(id) do
+  def get_user(%Blog.Post{} = post, _args, _) do
+    case Accounts.get_user(post) do
+      nil -> {:error, "User not found"}
+      user -> {:ok, user}
+    end
+  end
+
+  def get_user(_, args, _) do
+    case Accounts.get_user(args) do
       nil -> {:error, "User not found"}
       user -> {:ok, user}
     end
@@ -27,19 +34,15 @@ defmodule BlogApiWeb.Resolvers.UserResolver do
     {:ok, Accounts.list_users_with_posts()}
   end
 
-  @spec get_user_posts(map(), map(), map()) :: {:ok, list(map())}
-  def get_user_posts(%{id: user_id}, _args, _resolution) do
-    case Blog.get_posts_by_user_id(user_id) do
+  @spec list_posts(map(), map(), map()) :: {:ok, list(map())}
+  def list_posts(%Accounts.User{} = user, args, _resolution) do
+    case Blog.list_posts(user, args) do
       nil -> {:error, "User not found"}
       posts -> {:ok, posts}
     end
   end
 
-  @spec get_user_by_post(map(), map(), map()) :: {:ok, map()}
-  def get_user_by_post(post, _args, _resolution) do
-    case Accounts.get_user(post.user_id) do
-      nil -> {:error, "User not found"}
-      user -> {:ok, user}
-    end
+  def list_posts(_parent, args, _) do
+    {:ok, Blog.list_posts(args)}
   end
 end

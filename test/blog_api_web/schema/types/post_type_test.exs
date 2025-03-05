@@ -95,7 +95,7 @@ defmodule BlogApiWeb.Schema.Types.PostTypeTest do
     end
   end
 
-  describe "query: list_posts" do
+  describe "query: all_posts" do
     test "returns all posts" do
       user = AccountsFixtures.user_fixture()
       post1 = BlogFixtures.post_fixture(%{user_id: user.id, title: "First Post"})

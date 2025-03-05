@@ -1,14 +1,24 @@
 defmodule BlogApiWeb.Resolvers.PostResolver do
-  alias BlogApi.Blog
+  alias BlogApi.{Accounts, Blog}
 
   @spec all_posts(any, any, any) :: {:ok, list(Blog.Post.t())}
-  def all_posts(_root, _args, _info) do
-    {:ok, Blog.list_posts()}
+  def all_posts(%Accounts.User{} = author, args, _) do
+    case Blog.list_posts(author, args) do
+      nil -> {:error, "Posts not found"}
+      posts -> {:ok, posts}
+    end
+  end
+
+  def all_posts(_root, args, _info) do
+    case Blog.list_posts(args) do
+      nil -> {:error, "Posts not found"}
+      posts -> {:ok, posts}
+    end
   end
 
   @spec get_post(any, any, any) :: {:ok, Blog.Post.t()} | {:error, String.t()}
-  def get_post(_, %{id: id}, _) do
-    case Blog.get_post(id) do
+  def get_post(_, args, _) do
+    case Blog.get_post(args.id) do
       nil -> {:error, "Post not found"}
       post -> {:ok, post}
     end
@@ -26,13 +36,5 @@ defmodule BlogApiWeb.Resolvers.PostResolver do
 
   def create_post(_, _, _) do
     {:error, "Authentication required to create a post"}
-  end
-
-  @spec get_posts_by_user_id(any, any, any) :: {:ok, list(Blog.Post.t())} | {:error, String.t()}
-  def get_posts_by_user_id(_, %{id: id}, _) do
-    case Blog.get_posts_by_user_id(id) do
-      nil -> {:error, "User not found"}
-      posts -> {:ok, posts}
-    end
   end
 end

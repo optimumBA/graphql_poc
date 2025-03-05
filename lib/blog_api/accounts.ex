@@ -7,6 +7,7 @@ defmodule BlogApi.Accounts do
   alias BlogApi.Repo
 
   alias BlogApi.Accounts.User
+  alias BlogApi.Blog.Post
 
   @doc """
   Returns the list of users.
@@ -58,7 +59,15 @@ defmodule BlogApi.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-  def get_user(id) do
+  def get_user(%Post{} = post, _args, _) do
+    Repo.get(User, post.user_id)
+  end
+
+  def get_user(%{user_id: id} = _post) when is_binary(id) or is_integer(id) do
+    Repo.get(User, id)
+  end
+
+  def get_user(%{id: id}) when is_binary(id) or is_integer(id) do
     Repo.get(User, id)
   end
 

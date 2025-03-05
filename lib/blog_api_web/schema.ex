@@ -15,15 +15,8 @@ defmodule BlogApiWeb.Schema do
 
     @desc "Get a single post"
     field :get_post, :post_type do
-      arg(:id, :id)
+      arg(:id, non_null(:id))
       resolve(&Resolvers.PostResolver.get_post/3)
-    end
-
-    @desc "Get all posts by user"
-    field :get_posts_by_user_id, list_of(:post_type) do
-      middleware(Middleware.Authorize)
-      arg(:id, :id)
-      resolve(&Resolvers.PostResolver.get_posts_by_user_id/3)
     end
 
     @desc "Get all users"
@@ -35,14 +28,8 @@ defmodule BlogApiWeb.Schema do
     @desc "Get a single user"
     field :get_user, :user_type do
       middleware(Middleware.Authorize)
-      arg(:id, :id)
+      arg(:id, non_null(:id))
       resolve(&Resolvers.UserResolver.get_user/3)
-    end
-
-    @desc "Get all users with their posts"
-    field :all_users_with_posts, list_of(:user_type) do
-      middleware(Middleware.Authorize)
-      resolve(&Resolvers.UserResolver.all_users_with_their_posts/3)
     end
   end
 

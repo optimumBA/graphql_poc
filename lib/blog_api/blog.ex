@@ -21,6 +21,16 @@ defmodule BlogApi.Blog do
     Repo.all(Post)
   end
 
+  def list_posts(author, args) do
+    filters = args |> Enum.into(Keyword.new()) |> Keyword.put(:user_id, author.id)
+    Repo.all(from p in Post, where: ^filters)
+  end
+
+  def list_posts(args) do
+    filters = args |> Enum.into(Keyword.new())
+    Repo.all(from p in Post, where: ^filters)
+  end
+
   @doc """
   Gets a single post.
 
@@ -57,22 +67,6 @@ defmodule BlogApi.Blog do
     %Post{}
     |> Post.changeset(attrs)
     |> Repo.insert()
-  end
-
-  @doc """
-  Returns a user by post id.
-
-  ## Examples
-
-      iex> get_posts_by_user_id(1)
-      [%Post{}, ...]
-
-      iex> get_posts_by_user_id(2)
-      []
-
-  """
-  def get_posts_by_user_id(user_id) do
-    Repo.all(from p in Post, where: p.user_id == ^user_id)
   end
 
   @doc """
