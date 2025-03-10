@@ -1,6 +1,6 @@
-defmodule BlogApiWeb.Schema.Types.PostTypeTest do
+defmodule BlogApiWeb.Graphql.Types.PostTypeTest do
   use BlogApi.DataCase
-  alias BlogApiWeb.Schema
+  alias BlogApiWeb.Graphql.Schema
   alias BlogApi.{AccountsFixtures, BlogFixtures}
 
   describe "query: get_post" do
@@ -121,5 +121,46 @@ defmodule BlogApiWeb.Schema.Types.PostTypeTest do
       assert Enum.any?(posts, fn p -> p["id"] == to_string(post1.id) end)
       assert Enum.any?(posts, fn p -> p["id"] == to_string(post2.id) end)
     end
+  end
+
+  test "returns posts by matching string input" do
+    user = AccountsFixtures.user_fixture()
+    post1 = BlogFixtures.post_fixture(%{user_id: user.id, title: "First Post"})
+    _post2 = BlogFixtures.post_fixture(%{user_id: user.id, title: "Second Post"})
+
+    query = """
+    query($matching: String!) {
+      all_posts(matching: $matching) {
+        id
+      }
+    }
+    """
+
+    assert {:ok, %{data: %{"all_posts" => posts}}} =
+             Absinthe.run(query, Schema, variables: %{"matching" => "First"})
+
+    assert length(posts) == 1
+    assert Enum.any?(posts, fn p -> p["id"] == to_string(post1.id) end)
+  end
+
+  test "returns error when matching input is not a string " do
+    query = """
+    query {
+      all_posts(matching: 1) {
+        id
+      }
+    }
+    """
+
+    assert {:ok,
+            %{
+              errors: [
+                %{
+                  message: "Argument \"matching\" has invalid value 1.",
+                  locations: [%{line: 2, column: 13}]
+                }
+              ]
+            }} =
+             Absinthe.run(query, Schema, variables: %{"matching" => 1})
   end
 end

@@ -1,7 +1,7 @@
-defmodule BlogApiWeb.Schema.Types.UserType do
+defmodule BlogApiWeb.Graphql.Types.UserType do
   use Absinthe.Schema.Notation
 
-  alias BlogApiWeb.Resolvers
+  alias BlogApiWeb.Graphql.Resolvers
 
   object :user_type do
     field :id, non_null(:id)
@@ -10,7 +10,7 @@ defmodule BlogApiWeb.Schema.Types.UserType do
     field :updated_at, non_null(:naive_datetime)
 
     field :posts, list_of(:post_type) do
-      resolve &Resolvers.PostResolver.all_posts/3
+      resolve &Resolvers.Blog.PostResolver.all_posts/3
     end
   end
 

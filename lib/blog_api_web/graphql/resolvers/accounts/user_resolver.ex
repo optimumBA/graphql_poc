@@ -1,4 +1,4 @@
-defmodule BlogApiWeb.Resolvers.UserResolver do
+defmodule BlogApiWeb.Graphql.Resolvers.Accounts.UserResolver do
   alias BlogApi.Accounts
   alias BlogApi.Blog
   @spec all_users(any, any, any) :: {:ok, list(map())}

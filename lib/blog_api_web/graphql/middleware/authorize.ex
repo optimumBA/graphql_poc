@@ -1,4 +1,4 @@
-defmodule BlogApiWeb.Schema.Middleware.Authorize do
+defmodule BlogApiWeb.Graphql.Middleware.Authorize do
   @behaviour Absinthe.Middleware
 
   def call(resolution, _opts) do

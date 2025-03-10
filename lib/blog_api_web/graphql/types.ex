@@ -1,7 +1,7 @@
-defmodule BlogApiWeb.Schema.Types do
+defmodule BlogApiWeb.Graphql.Types do
   use Absinthe.Schema.Notation
 
-  alias BlogApiWeb.Schema.Types
+  alias BlogApiWeb.Graphql.Types
 
   import_types Types.{PostType, UserType, SessionType}
 end

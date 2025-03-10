@@ -22,14 +22,39 @@ defmodule BlogApi.Blog do
   end
 
   def list_posts(author, args) do
-    filters = args |> Enum.into(Keyword.new()) |> Keyword.put(:user_id, author.id)
-    Repo.all(from p in Post, where: ^filters)
+    IO.inspect(args, label: "args")
+
+    Post
+    |> where([p], ilike(p.title, ^"%#{args.matching}%"))
+    |> where([p], p.user_id == ^author.id)
+    |> Repo.all()
   end
 
-  def list_posts(args) do
-    filters = args |> Enum.into(Keyword.new())
-    Repo.all(from p in Post, where: ^filters)
+  @doc """
+  Returns the list of posts.
+
+  ## Examples
+
+      iex> list_posts()
+      [%Post{}, ...]
+
+  """
+
+  def list_posts(args) when is_map(args) do
+    IO.inspect(args, label: "args")
+    query = from(p in Post)
+
+    query =
+      if Map.has_key?(args, :matching) do
+        where(query, [p], ilike(p.title, ^"%#{args.matching}%"))
+      else
+        query
+      end
+
+    Repo.all(query)
   end
+
+  def list_posts(_args), do: list_posts()
 
   @doc """
   Gets a single post.

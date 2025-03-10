@@ -1,4 +1,4 @@
-defmodule BlogApiWeb.Resolvers.PostResolver do
+defmodule BlogApiWeb.Graphql.Resolvers.Blog.PostResolver do
   alias BlogApi.{Accounts, Blog}
 
   @spec all_posts(any, any, any) :: {:ok, list(Blog.Post.t())}

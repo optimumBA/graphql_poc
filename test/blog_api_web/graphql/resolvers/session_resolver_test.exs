@@ -1,6 +1,6 @@
-defmodule BlogApiWeb.Resolvers.SessionResolverTest do
+defmodule BlogApiWeb.Graphql.Resolvers.SessionResolverTest do
   use BlogApi.DataCase
-  alias BlogApiWeb.Resolvers.SessionResolver
+  alias BlogApiWeb.Graphql.Resolvers.Accounts
   alias BlogApi.AccountsFixtures
 
   describe "login_user/3" do
@@ -13,7 +13,7 @@ defmodule BlogApiWeb.Resolvers.SessionResolverTest do
         })
 
       assert {:ok, %{token: token, user: logged_in_user}} =
-               SessionResolver.login_user(
+               Accounts.SessionResolver.login_user(
                  nil,
                  %{
                    input: %{
@@ -36,7 +36,7 @@ defmodule BlogApiWeb.Resolvers.SessionResolverTest do
       })
 
       assert {:error, "Invalid email or password"} =
-               SessionResolver.login_user(
+               Accounts.SessionResolver.login_user(
                  nil,
                  %{
                    input: %{

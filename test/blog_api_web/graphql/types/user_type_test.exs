@@ -1,6 +1,6 @@
-defmodule BlogApiWeb.Schema.Types.UserTypeTest do
+defmodule BlogApiWeb.Graphql.Types.UserTypeTest do
   use BlogApi.DataCase
-  alias BlogApiWeb.Schema
+  alias BlogApiWeb.Graphql.Schema
   alias BlogApi.AccountsFixtures
 
   describe "user queries" do
