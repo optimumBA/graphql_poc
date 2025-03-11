@@ -7,10 +7,16 @@ defmodule BlogApiWeb.Graphql.Schema do
   alias BlogApiWeb.Graphql.Middleware
   alias BlogApiWeb.Graphql.Resolvers
 
+  enum :sort_order do
+    value(:asc)
+    value(:desc)
+  end
+
   query do
     @desc "Get all posts"
     field :all_posts, list_of(:post_type) do
       arg(:matching, :string)
+      arg(:order, type: :sort_order, default_value: :desc)
       resolve(&Resolvers.Blog.PostResolver.all_posts/3)
     end
 

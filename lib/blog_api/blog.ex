@@ -22,12 +22,19 @@ defmodule BlogApi.Blog do
   end
 
   def list_posts(author, args) do
-    IO.inspect(args, label: "args")
+    query =
+      from(p in Post)
+      |> where([p], p.user_id == ^author.id)
+      |> order_by([p], asc: p.inserted_at)
 
-    Post
-    |> where([p], ilike(p.title, ^"%#{args.matching}%"))
-    |> where([p], p.user_id == ^author.id)
-    |> Repo.all()
+    query =
+      if Map.has_key?(args, :matching) do
+        where(query, [p], ilike(p.title, ^"%#{args.matching}%"))
+      else
+        query
+      end
+
+    Repo.all(query)
   end
 
   @doc """
@@ -41,12 +48,18 @@ defmodule BlogApi.Blog do
   """
 
   def list_posts(args) when is_map(args) do
-    IO.inspect(args, label: "args")
     query = from(p in Post)
 
     query =
       if Map.has_key?(args, :matching) do
         where(query, [p], ilike(p.title, ^"%#{args.matching}%"))
+      else
+        query
+      end
+
+    query =
+      if Map.has_key?(args, :order) do
+        order_by(query, [p], asc: p.inserted_at)
       else
         query
       end
