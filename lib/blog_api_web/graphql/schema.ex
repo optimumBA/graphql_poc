@@ -1,11 +1,11 @@
-defmodule BlogApiWeb.Graphql.Schema do
+defmodule BlogApiWeb.GraphQL.Schema do
   use Absinthe.Schema
 
+  # datetime, native_datetime, decimal
   import_types Absinthe.Type.Custom
-  import_types BlogApiWeb.Graphql.Types
+  import_types BlogApiWeb.GraphQL.Types
 
-  alias BlogApiWeb.Graphql.Middleware
-  alias BlogApiWeb.Graphql.Resolvers
+  alias BlogApiWeb.GraphQL.{Middleware, Resolvers}
 
   enum :sort_order do
     value(:asc)

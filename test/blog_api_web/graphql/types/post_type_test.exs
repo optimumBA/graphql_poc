@@ -1,6 +1,6 @@
-defmodule BlogApiWeb.Graphql.Types.PostTypeTest do
+defmodule BlogApiWeb.GraphQL.Types.PostTypeTest do
   use BlogApi.DataCase
-  alias BlogApiWeb.Graphql.Schema
+  alias BlogApiWeb.GraphQL.Schema
   alias BlogApi.{AccountsFixtures, BlogFixtures}
 
   describe "query: get_post" do

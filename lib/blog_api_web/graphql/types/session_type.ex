@@ -1,4 +1,4 @@
-defmodule BlogApiWeb.Graphql.Types.SessionType do
+defmodule BlogApiWeb.GraphQL.Types.SessionType do
   use Absinthe.Schema.Notation
 
   object :session_type do

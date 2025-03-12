@@ -1,4 +1,4 @@
-defmodule BlogApiWeb.Graphql.Resolvers.Accounts.SessionResolver do
+defmodule BlogApiWeb.GraphQL.Resolvers.Accounts.SessionResolver do
   alias BlogApi.Accounts
   alias BlogApi.Guardian
 

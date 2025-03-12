@@ -1,6 +1,6 @@
-defmodule BlogApiWeb.Graphql.Resolvers.SessionResolverTest do
+defmodule BlogApiWeb.GraphQL.Resolvers.SessionResolverTest do
   use BlogApi.DataCase
-  alias BlogApiWeb.Graphql.Resolvers.Accounts
+  alias BlogApiWeb.GraphQL.Resolvers.Accounts
   alias BlogApi.AccountsFixtures
 
   describe "login_user/3" do

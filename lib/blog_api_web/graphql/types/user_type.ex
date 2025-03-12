@@ -1,7 +1,7 @@
-defmodule BlogApiWeb.Graphql.Types.UserType do
+defmodule BlogApiWeb.GraphQL.Types.UserType do
   use Absinthe.Schema.Notation
 
-  alias BlogApiWeb.Graphql.Resolvers
+  alias BlogApiWeb.GraphQL.Resolvers
 
   object :user_type do
     field :id, non_null(:id)
