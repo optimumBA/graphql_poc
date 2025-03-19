@@ -5,7 +5,7 @@ defmodule BlogApiWeb.GraphQL.Schema do
   import_types Absinthe.Type.Custom
   import_types BlogApiWeb.GraphQL.Types
 
-  alias BlogApiWeb.GraphQL.{Middleware, Resolvers}
+  alias BlogApiWeb.GraphQL.{Loader, Middleware, Resolvers}
 
   enum :sort_order do
     value(:asc)
@@ -59,5 +59,18 @@ defmodule BlogApiWeb.GraphQL.Schema do
       arg(:input, non_null(:session_input_type))
       resolve(&Resolvers.Accounts.SessionResolver.login_user/3)
     end
+  end
+
+  def context(ctx) do
+    loader =
+      Dataloader.new()
+      |> Dataloader.add_source(BlogApi.Blog.Post, Loader.source())
+      |> Dataloader.add_source(BlogApi.Accounts.User, Loader.source())
+
+    Map.put(ctx, :loader, loader)
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
   end
 end

@@ -48,7 +48,8 @@ defmodule BlogApi.MixProject do
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
       {:bcrypt_elixir, "~> 3.2"},
-      {:guardian, "~> 2.3"}
+      {:guardian, "~> 2.3"},
+      {:dataloader, "~> 2.0"}
     ]
   end
 

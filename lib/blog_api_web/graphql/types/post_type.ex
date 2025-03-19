@@ -1,7 +1,9 @@
 defmodule BlogApiWeb.GraphQL.Types.PostType do
   use Absinthe.Schema.Notation
 
-  alias BlogApiWeb.GraphQL.Resolvers
+  import Absinthe.Resolution.Helpers
+
+  alias BlogApi.Accounts.User
 
   object :post_type do
     field :id, non_null(:id)
@@ -13,9 +15,7 @@ defmodule BlogApiWeb.GraphQL.Types.PostType do
     field :updated_at, non_null(:naive_datetime)
     field :user_id, non_null(:integer)
 
-    field :user, :user_type do
-      resolve &Resolvers.Accounts.UserResolver.get_user_by_post/3
-    end
+    field :user, non_null(:user_type), resolve: dataloader(User)
   end
 
   input_object :post_input_type do
