@@ -1,6 +1,7 @@
-defmodule BlogApiWeb.Resolvers.SessionResolver do
+defmodule BlogApiWeb.GraphQL.Resolvers.Accounts.SessionResolver do
   alias BlogApi.Accounts
   alias BlogApi.Guardian
+
   def login_user(_, %{input: input}, _) do
     # check if user is in our db
     # if a user is found, generate a token and return it

@@ -9,6 +9,11 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+user =
+  BlogApi.Repo.insert!(%BlogApi.Accounts.User{
+    email: "test@test.com",
+    password: "password123456789"
+  })
 
 for i <- 1..50 do
   :timer.sleep(100)
@@ -17,6 +22,7 @@ for i <- 1..50 do
     title: "My First Post #{i}",
     body: "This is my first post #{i}",
     published_at:
-      NaiveDateTime.truncate(NaiveDateTime.add(NaiveDateTime.utc_now(), -i * 1000), :second)
+      NaiveDateTime.truncate(NaiveDateTime.add(NaiveDateTime.utc_now(), -i * 1000), :second),
+    user_id: user.id
   })
 end

@@ -8,13 +8,14 @@ defmodule BlogApi.BlogFixtures do
   Generate a post.
   """
   def post_fixture(attrs \\ %{}) do
+    user = BlogApi.AccountsFixtures.user_fixture()
+
     {:ok, post} =
       attrs
       |> Enum.into(%{
         body: "some body",
-        published_at: ~N[2025-02-24 13:08:00],
         title: "some title",
-        views: 42
+        user_id: user.id
       })
       |> BlogApi.Blog.create_post()
 

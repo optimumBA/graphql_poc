@@ -12,6 +12,7 @@ defmodule BlogApi.Guardian do
     sub = to_string(id)
     {:ok, sub}
   end
+
   def subject_for_token(_, _) do
     {:error, :reason_for_error}
   end
@@ -25,9 +26,8 @@ defmodule BlogApi.Guardian do
       user -> {:ok, user}
     end
   end
+
   def resource_from_claims(_claims) do
     {:error, :reason_for_error}
   end
-
-
 end

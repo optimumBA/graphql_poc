@@ -12,14 +12,14 @@ defmodule BlogApiWeb.Router do
 
   scope "/graphql" do
     pipe_through :api
-    forward "/", Absinthe.Plug, schema: BlogApiWeb.Schema
+    forward "/", Absinthe.Plug, schema: BlogApiWeb.GraphQL.Schema
   end
 
   scope "/graphiql" do
     pipe_through :api
 
     forward "/", Absinthe.Plug.GraphiQL,
-      schema: BlogApiWeb.Schema,
+      schema: BlogApiWeb.GraphQL.Schema,
       # interfaces can be :playground or :simple or :advanced or :playground
       interface: :advanced,
       context: %{pubsub: BlogApiWeb.PubSub}

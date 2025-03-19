@@ -4,11 +4,13 @@ defmodule BlogApiWeb.Plugs.Context do
   import Plug.Conn
 
   alias BlogApi.Guardian
+  alias Dataloader
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
     context = build_context(conn)
+
     Absinthe.Plug.put_options(conn, context: context)
   end
 

@@ -21,6 +21,54 @@ defmodule BlogApi.Blog do
     Repo.all(Post)
   end
 
+  def list_posts(author, args) do
+    query =
+      from(p in Post)
+      |> where([p], p.user_id == ^author.id)
+      |> order_by([p], asc: p.inserted_at)
+
+    query =
+      if Map.has_key?(args, :matching) do
+        where(query, [p], ilike(p.title, ^"%#{args.matching}%"))
+      else
+        query
+      end
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Returns the list of posts.
+
+  ## Examples
+
+      iex> list_posts()
+      [%Post{}, ...]
+
+  """
+
+  def list_posts(args) when is_map(args) do
+    query = from(p in Post)
+
+    query =
+      if Map.has_key?(args, :matching) do
+        where(query, [p], ilike(p.title, ^"%#{args.matching}%"))
+      else
+        query
+      end
+
+    query =
+      if Map.has_key?(args, :order) do
+        order_by(query, [p], asc: p.inserted_at)
+      else
+        query
+      end
+
+    Repo.all(query)
+  end
+
+  def list_posts(_args), do: list_posts()
+
   @doc """
   Gets a single post.
 
