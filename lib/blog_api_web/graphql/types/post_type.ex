@@ -14,7 +14,7 @@ defmodule BlogApiWeb.GraphQL.Types.PostType do
     field :user_id, non_null(:integer)
 
     field :user, :user_type do
-      resolve &Resolvers.Accounts.UserResolver.get_user/3
+      resolve &Resolvers.Accounts.UserResolver.get_user_by_post/3
     end
   end
 

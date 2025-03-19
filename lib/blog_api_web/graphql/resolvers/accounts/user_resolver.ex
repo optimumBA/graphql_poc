@@ -7,23 +7,24 @@ defmodule BlogApiWeb.GraphQL.Resolvers.Accounts.UserResolver do
   end
 
   @spec create_user(any, any, any) :: {:ok, map()} | {:error, String.t()}
-  def create_user(_, %{input: input}, _) do
+  def create_user(_root, %{input: input} = _args, _info) do
     case Accounts.create_user(input) do
       {:ok, user} -> {:ok, user}
       {:error, changeset} -> {:error, changeset}
     end
   end
 
-  @spec get_user(any, any, any) :: {:ok, map()} | {:error, String.t()}
-  def get_user(%Blog.Post{} = post, _args, _) do
-    case Accounts.get_user(post) do
+  @spec get_user_by_post(any, any, any) :: {:ok, map()} | {:error, String.t()}
+  def get_user_by_post(%{user_id: id} = _post, _args, _info) do
+    case Accounts.get_user(id) do
       nil -> {:error, "User not found"}
       user -> {:ok, user}
     end
   end
 
-  def get_user(_, args, _) do
-    case Accounts.get_user(args) do
+  @spec get_user(any, any, any) :: {:ok, map()} | {:error, String.t()}
+  def get_user(_root, %{id: id} = _args, _info) do
+    case Accounts.get_user(id) do
       nil -> {:error, "User not found"}
       user -> {:ok, user}
     end
@@ -42,7 +43,7 @@ defmodule BlogApiWeb.GraphQL.Resolvers.Accounts.UserResolver do
     end
   end
 
-  def list_posts(_parent, args, _) do
+  def list_posts(_parent, args, _info) do
     {:ok, Blog.list_posts(args)}
   end
 end

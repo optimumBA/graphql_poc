@@ -10,7 +10,7 @@ defmodule BlogApiWeb.GraphQL.Types.UserType do
     field :updated_at, non_null(:naive_datetime)
 
     field :posts, list_of(:post_type) do
-      resolve &Resolvers.Blog.PostResolver.all_posts/3
+      resolve &Resolvers.Blog.PostResolver.all_user_posts/3
     end
   end
 
